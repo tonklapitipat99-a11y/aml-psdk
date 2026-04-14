@@ -67,6 +67,13 @@ inline Ret CallFnVariadic(uintptr_t address, Args&&... args)
             return *m_Pointer; \
         }
 
+#define DECL_VALUE_ADDR_BASE(_type, _name, _addr) \
+        _type& operator()() { return Get(); } \
+        static inline _type& Get() { \
+            if(!m_Pointer) m_Pointer = (_type*)(GetMainLibraryAddress() + _addr); \
+            return *m_Pointer; \
+        }
+
 #define DECL_VALUE_PLTPTR_BASE(_type, _name, _addr) \
         _type& operator()() { return Get(); } \
         static inline _type& Get() { \
@@ -152,6 +159,14 @@ inline Ret CallFnVariadic(uintptr_t address, Args&&... args)
 #define DECL_VALUE_PLT_I32_GLOBAL(_name, _addr) \
     DECL_VALUE_HEAD(i32, _name) \
         DECL_VALUE_PLT_BASE(i32, _name, _addr) \
+        DECL_VALUE_NUMBER_BASE(i32) \
+        DECL_VALUE_BITOPS_BASE(i32) \
+        DECL_VALUE_RETURN_BASE(int) \
+    DECL_VALUE_TAIL_GLOBAL(i32, _name)
+
+#define DECL_VALUE_ADDR_I32_GLOBAL(_name, _addr) \
+    DECL_VALUE_HEAD(i32, _name) \
+        DECL_VALUE_ADDR_BASE(i32, _name, _addr) \
         DECL_VALUE_NUMBER_BASE(i32) \
         DECL_VALUE_BITOPS_BASE(i32) \
         DECL_VALUE_RETURN_BASE(int) \

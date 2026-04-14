@@ -53,6 +53,7 @@ MYMOD(net.psdk.mymod.guid, AML PSDK Template, 1.0, Author)
 #include <aml-psdk/game_sa/other/TextureDatabase.h>
 #include <aml-psdk/game_sa/engine/OS.h>
 #include <aml-psdk/game_sa/utils/ThreadSyncer.h>
+#include <aml-psdk/game_sa/engine/TxdStore.h>
 
 DECL_HOOKv(CCamera__Process, CCamera* self)
 {
